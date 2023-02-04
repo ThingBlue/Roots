@@ -10,9 +10,12 @@ namespace Roots
     {
         UnityEvent _event;
         public float maxSpeed = 3;
-        public float accel = 1;
+        public float accel = 32;
         public float dampingFactor = 4;
         public float minDamping = 4;
+
+        public int runes;
+        RuneType[] runeTypes;
 
         public Rigidbody2D body;
 
@@ -22,15 +25,29 @@ namespace Roots
             if (_event == null)
                 _event = new UnityEvent();
 
+            if(!body)
+            {
+                body = GetComponent<Rigidbody2D>();
+            }
+
+            runes = 0;
         }
 
         // Fixed Update
         private void FixedUpdate()
         {
-            if(InputManager.getKey("UP"))
+            
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            #region Movement
+
+            if (InputManager.getKey("UP"))
             {
                 //transform.Translate(Vector2.up * speed);
-                if(body.velocity.y < maxSpeed)
+                if (body.velocity.y < maxSpeed)
                 {
                     body.AddForce(Vector2.up * accel);
                     //body.velocity = new Vector2(body.velocity.x, maxSpeed);
@@ -64,7 +81,7 @@ namespace Roots
                 }
             }
 
-            if(!(InputManager.getKey("UP") || InputManager.getKey("DOWN")))
+            if (!(InputManager.getKey("UP") || InputManager.getKey("DOWN")))
             {
                 Vector2 damping = Vector2.zero;
                 damping.y = dampingFactor * -body.velocity.y;
@@ -88,17 +105,20 @@ namespace Roots
                 }
             }
 
+            #endregion
+
+            if (InputManager.getKeyDown("Interact"))
+            {
+                BroadcastMessage("interactWithObject");
+            }
         }
 
-        void addMovement(Vector2 velDirection, float speed)
+        void collectRune(RuneType collectedType)
         {
-
+            Debug.Log("Collected rune! Now have " + ++runes + " runes.");
+            if (collectedType == RuneType.AIR)
+                Debug.Log("Collected air rune!");
         }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+        
     }
 }

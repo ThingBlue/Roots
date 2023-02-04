@@ -21,6 +21,7 @@ namespace Roots
             addKeyToMap("LEFt", KeyCode.A);
             addKeyToMap("RIGHT", KeyCode.D);
             addKeyToMap("DOWN", KeyCode.S);
+            addKeyToMap("Interact", KeyCode.E);
         }
 
         #region Getters
