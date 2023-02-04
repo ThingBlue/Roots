@@ -17,7 +17,7 @@ public class CameraFollower : MonoBehaviour
         
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         Vector3 target = followTarget.transform.position;
         target.z = -10.0f;

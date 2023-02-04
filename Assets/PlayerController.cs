@@ -22,10 +22,6 @@ namespace Roots
             if (_event == null)
                 _event = new UnityEvent();
 
-            InputManager.addKeyToMap("UP", KeyCode.W);
-            InputManager.addKeyToMap("LEFt", KeyCode.A);
-            InputManager.addKeyToMap("RIGHT", KeyCode.D);
-            InputManager.addKeyToMap("DOWN", KeyCode.S);
         }
 
         // Fixed Update
@@ -34,17 +30,17 @@ namespace Roots
             if(InputManager.getKey("UP"))
             {
                 //transform.Translate(Vector2.up * speed);
-                body.AddForce(Vector2.up * accel);
-                if(body.velocity.y > maxSpeed)
+                if(body.velocity.y < maxSpeed)
                 {
-                    body.velocity = new Vector2(body.velocity.x, maxSpeed);
+                    body.AddForce(Vector2.up * accel);
+                    //body.velocity = new Vector2(body.velocity.x, maxSpeed);
                 }
             }
             if (InputManager.getKey("LEFt"))
             {
                 //transform.Translate(Vector2.left * accel);
                 body.AddForce(Vector2.left * accel);
-                if (body.velocity.x < maxSpeed)
+                if (body.velocity.x < -maxSpeed)
                 {
                     body.velocity = new Vector2(-maxSpeed, body.velocity.y);
                 }
@@ -53,7 +49,7 @@ namespace Roots
             {
                 //transform.Translate(Vector2.down * accel);
                 body.AddForce(Vector2.down * accel);
-                if (body.velocity.y < maxSpeed)
+                if (body.velocity.y < -maxSpeed)
                 {
                     body.velocity = new Vector2(body.velocity.x, -maxSpeed);
                 }
@@ -68,7 +64,7 @@ namespace Roots
                 }
             }
 
-            if(!InputManager.getKey("UP") && !InputManager.getKey("DOWN"))
+            if(!(InputManager.getKey("UP") || InputManager.getKey("DOWN")))
             {
                 Vector2 damping = Vector2.zero;
                 damping.y = dampingFactor * -body.velocity.y;
@@ -80,7 +76,7 @@ namespace Roots
                 }
             }
 
-            if (!InputManager.getKey("LEFt") && !InputManager.getKey("RIGHT"))
+            if (!(InputManager.getKey("LEFt") || InputManager.getKey("RIGHT")))
             {
                 Vector2 damping = Vector2.zero;
                 damping.x = dampingFactor * -body.velocity.x;
@@ -91,6 +87,11 @@ namespace Roots
                     body.velocity = new Vector2(0, body.velocity.y);
                 }
             }
+
+        }
+
+        void addMovement(Vector2 velDirection, float speed)
+        {
 
         }
 
