@@ -14,6 +14,9 @@ namespace Roots
         public float dampingFactor = 4;
         public float minDamping = 4;
 
+        public int runes;
+        RuneType runeTypes;
+
         public Rigidbody2D body;
 
         // Start is called before the first frame update
@@ -22,12 +25,20 @@ namespace Roots
             if (_event == null)
                 _event = new UnityEvent();
 
+            if(!body)
+            {
+                body = GetComponent<Rigidbody2D>();
+            }
+
+            runes = 0;
         }
 
         // Fixed Update
         private void FixedUpdate()
         {
-            if(InputManager.getKey("UP"))
+            #region Movement
+
+            if (InputManager.getKey("UP"))
             {
                 //transform.Translate(Vector2.up * speed);
                 if(body.velocity.y < maxSpeed)
@@ -88,11 +99,19 @@ namespace Roots
                 }
             }
 
+            #endregion
+
+            if(InputManager.getKey("Interact"))
+            {
+                BroadcastMessage("interactWithObject");
+            }
         }
 
-        void addMovement(Vector2 velDirection, float speed)
+        void collectRune(RuneType collectedType)
         {
-
+            Debug.Log("Collected rune! Now have " + ++runes + " runes.");
+            if (collectedType == RuneType.AIR)
+                Debug.Log("Collected air rune!");
         }
 
         // Update is called once per frame
