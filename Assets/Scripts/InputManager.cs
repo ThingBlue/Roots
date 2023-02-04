@@ -8,16 +8,9 @@ namespace Roots
     public class InputManager : MonoBehaviour
     {
         // Singleton
-        public static InputManager instance;
+        //public static InputManager instance;
 
-        public Dictionary<string, List<KeyCode>> keyMap;
-
-        private void Awake()
-        {
-            // Singleton
-            if (instance == null) instance = this;
-            else Destroy(this);
-        }
+        public static Dictionary<string, List<KeyCode>> keyMap;
 
         private void Start()
         {
@@ -27,7 +20,7 @@ namespace Roots
 
         #region Getters
 
-        public bool getKey(string key)
+        public static bool getKey(string key)
         {
             if (!keyMap.ContainsKey(key)) return false;
 
@@ -38,7 +31,7 @@ namespace Roots
             return false;
         }
 
-        public bool getKeyDown(string key)
+        public static bool getKeyDown(string key)
         {
             if (!keyMap.ContainsKey(key)) return false;
 
@@ -49,7 +42,7 @@ namespace Roots
             return false;
         }
 
-        public bool getKeyUp(string key)
+        public static bool getKeyUp(string key)
         {
             if (!keyMap.ContainsKey(key)) return false;
 
@@ -61,7 +54,7 @@ namespace Roots
         }
 
         // Getter for key map
-        public List<KeyCode> getKeysInMap(string key)
+        public static List<KeyCode> getKeysInMap(string key)
         {
             if (!keyMap.ContainsKey(key)) return new List<KeyCode>();
 
@@ -69,7 +62,7 @@ namespace Roots
         }
 
         // Getter for mouse position in world space
-        public Vector3 getMousePositionInWorld()
+        public static Vector3 getMousePositionInWorld()
         {
             // Create plane at zero
             Plane plane = new Plane(Vector3.back, Vector3.zero);
@@ -86,14 +79,14 @@ namespace Roots
 
         #region Setters
 
-        public void clearKeyListInMap(string key)
+        public static void clearKeyListInMap(string key)
         {
             if (!keyMap.ContainsKey(key)) return;
 
             keyMap[key].Clear();
         }
 
-        public void addKeyToMap(string key, KeyCode value)
+        public static void addKeyToMap(string key, KeyCode value)
         {
             // Create new keycode mapping if it doesn't exist
             if (!keyMap.ContainsKey(key)) keyMap.Add(key, new List<KeyCode>());
@@ -104,7 +97,7 @@ namespace Roots
             keyMap[key].Add(value);
         }
 
-        public void setKeyListInMap(string key, List<KeyCode> value)
+        public static void setKeyListInMap(string key, List<KeyCode> value)
         {
             // Create new keycode mapping if it doesn't exist
             if (!keyMap.ContainsKey(key)) keyMap.Add(key, value);
