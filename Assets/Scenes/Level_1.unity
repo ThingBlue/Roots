@@ -268,6 +268,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91b167149938dad4485bc1f6f7488271, type: 3}
+--- !u!1 &323704761 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5001129134194786705, guid: 91b167149938dad4485bc1f6f7488271, type: 3}
+  m_PrefabInstance: {fileID: 323704760}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &323704762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 323704761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd1d0c1914364d447b04ca135b01fb05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactRadius: 1.2
 --- !u!1 &1076989304
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,6 +392,10 @@ PrefabInstance:
     - target: {fileID: 5958019152250720373, guid: fc399ab171592b84896d3cb1099697d4, type: 3}
       propertyPath: m_Name
       value: Doorway
+      objectReference: {fileID: 0}
+    - target: {fileID: 5958019152250720373, guid: fc399ab171592b84896d3cb1099697d4, type: 3}
+      propertyPath: m_TagString
+      value: Interactive
       objectReference: {fileID: 0}
     - target: {fileID: 5958019152883233202, guid: fc399ab171592b84896d3cb1099697d4, type: 3}
       propertyPath: m_SortingOrder
