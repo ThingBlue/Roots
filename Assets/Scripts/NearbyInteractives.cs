@@ -29,7 +29,7 @@ public class NearbyInteractives : MonoBehaviour
         GameObject interactiveObject = findInteractive();
         if(interactiveObject)
         {
-            interactiveObject.BroadcastMessage("interacted");
+            interactiveObject.BroadcastMessage("interacted", gameObject);
         }
     }
 

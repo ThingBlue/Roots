@@ -27,7 +27,7 @@ namespace Roots
 
         }
 
-        void interacted()
+        void interacted(GameObject object)
         {
             Debug.Log(gameObject.name + " was interacted with!");
 
