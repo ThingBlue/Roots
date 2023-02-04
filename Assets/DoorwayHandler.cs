@@ -27,7 +27,7 @@ namespace Roots
 
         }
 
-        void interacted(GameObject object)
+        void interacted(GameObject interacter)
         {
             Debug.Log(gameObject.name + " was interacted with!");
 
@@ -49,10 +49,13 @@ namespace Roots
             {
                 if (collision.gameObject.GetComponent<PlayerController>().runes >= requiredRunesForExit)
                 {
-                    Debug.Log("Player can exit game! Moving on..");
-                    Scene currentScene = SceneManager.GetActiveScene();
-                    SceneManager.LoadScene(nextSceneName);
-                    SceneManager.UnloadSceneAsync(currentScene);
+                    // Move to next scene (not necessary)
+                    //Debug.Log("Player can exit game! Moving on..");
+                    //Scene currentScene = SceneManager.GetActiveScene();
+                    //SceneManager.LoadScene(nextSceneName);
+                    //SceneManager.UnloadSceneAsync(currentScene);
+
+
                 }
             }
         }
