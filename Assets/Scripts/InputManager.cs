@@ -16,6 +16,11 @@ namespace Roots
         {
             // Initialize key map
             keyMap = new Dictionary<string, List<KeyCode>>();
+
+            addKeyToMap("UP", KeyCode.W);
+            addKeyToMap("LEFt", KeyCode.A);
+            addKeyToMap("RIGHT", KeyCode.D);
+            addKeyToMap("DOWN", KeyCode.S);
         }
 
         #region Getters
