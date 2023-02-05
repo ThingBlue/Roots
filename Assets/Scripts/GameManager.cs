@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
         doorClosedSprite.SetActive(true);
         doorOpenSprite.SetActive(false);
         doorCollider.enabled = true;
+
+        Screen.fullScreenMode = FullScreenMode.Windowed;
     }
 
     private void FixedUpdate()
