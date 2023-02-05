@@ -16,7 +16,7 @@ namespace Roots
 
         public GameObject rootSpawnPrefab;
         public int maxRoots = 4;
-        List<GameObject> rootList;
+        public List<GameObject> rootList;
 
         public int runes;
         RuneType[] runeTypes;
@@ -121,7 +121,9 @@ namespace Roots
             {
                 if (rootList.Count >= maxRoots)
                 {
+                    GameObject rootToDestroy = rootList[0];
                     rootList.RemoveAt(0);
+                    Destroy(rootToDestroy);
                 }
                 rootList.Add(Instantiate(rootSpawnPrefab, body.transform.position, Quaternion.identity));
             }

@@ -11,6 +11,7 @@ namespace Roots
     public class PlayerRootRadialMenu : MonoBehaviour
     {
         public RadialMenu radialMenu;
+        public PlayerController player;
 
         [Space]
         public Sprite[] sprites;
@@ -29,7 +30,11 @@ namespace Roots
             else if (InputManager.getKeyUp("RadialRoot"))
             {
                 int selected = radialMenu.Hide();
-                Debug.Log($"Selected : {selected}");
+                // Debug.Log($"selected: {selected}");
+                if (selected <= player.rootList.Count - 1)
+                {
+                    player.body.transform.position = player.rootList[selected].transform.position;
+                }
             }
         }
     }
