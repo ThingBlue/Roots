@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu]
 public class StateSaver : ScriptableObject
 {
-    List<RuneType> runeTypes
+    List<RuneType> runeTypes;
 }
