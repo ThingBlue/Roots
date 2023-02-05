@@ -120,6 +120,10 @@ namespace Roots
             {
                 rootList.Add(Instantiate(rootSpawnPrefab, body.transform.position, Quaternion.identity));
             }
+            if (InputManager.getKeyDown("TeleportRoot"))
+            {
+                body.transform.position = rootList[rootList.Count - 1].transform.position;
+            }
         }
 
         void collectRune(RuneType collectedType)

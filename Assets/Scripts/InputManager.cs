@@ -23,6 +23,7 @@ namespace Roots
             addKeyToMap("DOWN", KeyCode.S);
             addKeyToMap("Interact", KeyCode.E);
             addKeyToMap("SpawnRoot", KeyCode.R);
+            addKeyToMap("TeleportRoot", KeyCode.T);
         }
 
         #region Getters
