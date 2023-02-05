@@ -74,9 +74,6 @@ namespace Roots
         {
             // Reset input
             playerInput = Vector2.zero;
-            interactKeyDown = false;
-            spawnRootKeyDown = false;
-            teleportRootKeyDown = false;
 
             if (InputManager.getKey("LEFt"))
             {
@@ -117,6 +114,7 @@ namespace Roots
 
             if (interactKeyDown)
             {
+                Debug.Log("ASDFASFSASFD");
                 BroadcastMessage("interactWithObject");
             }
             if (spawnRootKeyDown)
@@ -135,6 +133,11 @@ namespace Roots
             {
                 body.transform.position = rootList[rootList.Count - 1].transform.position;
             }
+
+            // Reset key down inputs
+            interactKeyDown = false;
+            spawnRootKeyDown = false;
+            teleportRootKeyDown = false;
         }
 
         private void handleMovement()
@@ -275,12 +278,22 @@ namespace Roots
             //animstate.Clear();
         }
 
-        private void collectRune(RuneType collectedType)
+        private void collectRune()
         {
             Debug.Log("Collected rune! Now have " + ++runes + " runes.");
-            if (collectedType == RuneType.AIR)
-                Debug.Log("Collected air rune!");
+            GameManager.instance.runesCollected = runes;
         }
-        
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            Debug.Log("ASDF");
+
+            if (other.tag == "Rune")
+            {
+                collectRune();
+                other.gameObject.SetActive(false);
+            }
+        }
+
     }
 }

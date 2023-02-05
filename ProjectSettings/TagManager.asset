@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Interactive
+  - Rune
   layers:
   - Default
   - TransparentFX
@@ -44,6 +45,9 @@ TagManager:
     locked: 0
   - name: Terrain
     uniqueID: 2425651459
+    locked: 0
+  - name: Runes
+    uniqueID: 953534283
     locked: 0
   - name: Player
     uniqueID: 4250941897
