@@ -14,6 +14,9 @@ namespace Roots
         public float dampingFactor = 4;
         public float minDamping = 4;
 
+        public GameObject rootSpawnPrefab;
+        List<GameObject> rootList;
+
         public int runes;
         RuneType[] runeTypes;
 
@@ -29,6 +32,8 @@ namespace Roots
             {
                 body = GetComponent<Rigidbody2D>();
             }
+
+            rootList = new List<GameObject>();
 
             runes = 0;
         }
@@ -110,6 +115,10 @@ namespace Roots
             if (InputManager.getKeyDown("Interact"))
             {
                 BroadcastMessage("interactWithObject");
+            }
+            if (InputManager.getKeyDown("SpawnRoot"))
+            {
+                rootList.Add(Instantiate(rootSpawnPrefab, body.transform.position, Quaternion.identity));
             }
         }
 
