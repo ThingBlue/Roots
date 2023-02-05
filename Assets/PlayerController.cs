@@ -37,11 +37,14 @@ namespace Roots
             UP,
             DOWN,
             LEFT,
-            RIGHT
+            RIGHT,
+            TP,
+            NULL
         }
 
         private List<AnimationState> animstate;
         private AnimationState lastState = AnimationState.DOWN;
+        private AnimationState curState = AnimationState.DOWN;
 
         private void Start()
         {
@@ -74,14 +77,34 @@ namespace Roots
             spawnRootKeyDown = false;
             teleportRootKeyDown = false;
 
-            if (InputManager.getKey("LEFt")) playerInput.x -= 1;
-            if (InputManager.getKey("RIGHT")) playerInput.x += 1;
-            if (InputManager.getKey("UP")) playerInput.y += 1;
-            if (InputManager.getKey("DOWN")) playerInput.y -= 1;
+            if (InputManager.getKey("LEFt"))
+            {
+                playerInput.x -= 1;
+                curState = AnimationState.LEFT;
+            }
+            if (InputManager.getKey("RIGHT"))
+            {
+                playerInput.x += 1;
+                curState = AnimationState.RIGHT;
+            }
+            if (InputManager.getKey("UP"))
+            {
+                playerInput.y += 1;
+                curState = AnimationState.UP;
+            }
+            if (InputManager.getKey("DOWN"))
+            {
+                playerInput.y -= 1;
+                curState = AnimationState.DOWN;
+            }
 
             if (InputManager.getKeyDown("Interact")) interactKeyDown = true;
             if (InputManager.getKeyDown("SpawnRoot")) spawnRootKeyDown = true;
-            if (InputManager.getKeyDown("TeleportRoot")) teleportRootKeyDown = true;
+            if (InputManager.getKeyDown("TeleportRoot"))
+            {
+                teleportRootKeyDown = true;
+                curState = AnimationState.TP;
+            }
         }
 
 
@@ -164,38 +187,89 @@ namespace Roots
 
         private void runAnimation()
         {
-            if (animstate.Count > 0)
+            switch (curState)
             {
-                if (animstate.Contains(AnimationState.LEFT))
-                {
+                case AnimationState.LEFT:
                     animator.Play("PlayerWalkLeft");
-                }
-                else if (animstate.Contains(AnimationState.RIGHT))
-                {
+                    lastState = AnimationState.LEFT;
+                    break;
+                case AnimationState.RIGHT:
                     animator.Play("PlayerWalkRight");
-                }
-                else if (animstate.Contains(AnimationState.UP))
-                {
+                    lastState = AnimationState.RIGHT;
+                    break;
+                case AnimationState.UP:
                     animator.Play("PlayerWalkUp");
-                }
-                else if (animstate.Contains(AnimationState.DOWN))
-                {
+                    lastState = AnimationState.UP;
+                    break;
+                case AnimationState.DOWN:
                     animator.Play("PlayerWalkDown");
-                }
-            }
-            else
-            {
-                if (lastState == AnimationState.LEFT)
-                    animator.Play("PlayerIdleLeft");
-                else if (lastState == AnimationState.RIGHT)
-                    animator.Play("PlayerIdleRight");
-                else if (lastState == AnimationState.UP)
-                    animator.Play("PlayerIdleUp");
-                else if (lastState == AnimationState.DOWN)
-                    animator.Play("PlayerIdleDown");
+                    lastState = AnimationState.DOWN;
+                    break;
+                case AnimationState.TP:
+                    animator.Play("PlayerTeleport");
+                    lastState = AnimationState.TP;
+                    break;
+                case AnimationState.NULL:
+                    break;
             }
 
-            animstate.Clear();
+            if (curState == AnimationState.NULL)
+            {
+                switch (lastState)
+                {
+                    case AnimationState.LEFT:
+                        animator.Play("PlayerIdleLeft");
+                        break;
+                    case AnimationState.RIGHT:
+                        animator.Play("PlayerIdleRight");
+                        break;
+                    case AnimationState.UP:
+                        animator.Play("PlayerIdleUp");
+                        break;
+                    case AnimationState.DOWN:
+                        animator.Play("PlayerIdleDown");
+                        break;
+                    case AnimationState.TP:
+                        animator.Play("PlayerTeleport");
+                        break;
+                }
+            }
+
+            curState = AnimationState.NULL;
+
+
+            //if (animstate.Count > 0)
+            //{
+            //    if (animstate.Contains(AnimationState.LEFT))
+            //    {
+            //        animator.Play("PlayerWalkLeft");
+            //    }
+            //    else if (animstate.Contains(AnimationState.RIGHT))
+            //    {
+            //        animator.Play("PlayerWalkRight");
+            //    }
+            //    else if (animstate.Contains(AnimationState.UP))
+            //    {
+            //        animator.Play("PlayerWalkUp");
+            //    }
+            //    else if (animstate.Contains(AnimationState.DOWN))
+            //    {
+            //        animator.Play("PlayerWalkDown");
+            //    }
+            //}
+            //else
+            //{
+            //    if (lastState == AnimationState.LEFT)
+            //        animator.Play("PlayerIdleLeft");
+            //    else if (lastState == AnimationState.RIGHT)
+            //        animator.Play("PlayerIdleRight");
+            //    else if (lastState == AnimationState.UP)
+            //        animator.Play("PlayerIdleUp");
+            //    else if (lastState == AnimationState.DOWN)
+            //        animator.Play("PlayerIdleDown");
+            //}
+
+            //animstate.Clear();
         }
 
         private void collectRune(RuneType collectedType)
