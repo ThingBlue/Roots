@@ -9,10 +9,9 @@ namespace Roots
     public class PlayerController : MonoBehaviour
     {
         UnityEvent _event;
-        public float maxSpeed = 3;
-        public float accel = 32;
-        public float dampingFactor = 4;
-        public float minDamping = 4;
+        public float maxSpeed = 4;
+        public float accel = 100;
+        public float decel = 100;
 
         public GameObject rootSpawnPrefab;
 
@@ -26,6 +25,13 @@ namespace Roots
 
         public Rigidbody2D body;
 
+        private Vector2 velocity;
+
+        private Vector2 playerInput;
+        private bool interactKeyDown;
+        private bool spawnRootKeyDown;
+        private bool teleportRootKeyDown;
+
         private enum AnimationState
         {
             UP,
@@ -37,8 +43,7 @@ namespace Roots
         private List<AnimationState> animstate;
         private AnimationState lastState = AnimationState.DOWN;
 
-        // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             if (_event == null)
                 _event = new UnityEvent();
@@ -56,89 +61,41 @@ namespace Roots
             animstate = new List<AnimationState>();
         }
 
+        private void Update()
+        {
+            handleInput();
+        }
+
+        private void handleInput()
+        {
+            // Reset input
+            playerInput = Vector2.zero;
+            interactKeyDown = false;
+            spawnRootKeyDown = false;
+            teleportRootKeyDown = false;
+
+            if (InputManager.getKey("LEFt")) playerInput.x -= 1;
+            if (InputManager.getKey("RIGHT")) playerInput.x += 1;
+            if (InputManager.getKey("UP")) playerInput.y += 1;
+            if (InputManager.getKey("DOWN")) playerInput.y -= 1;
+
+            if (InputManager.getKeyDown("Interact")) interactKeyDown = true;
+            if (InputManager.getKeyDown("SpawnRoot")) spawnRootKeyDown = true;
+            if (InputManager.getKeyDown("TeleportRoot")) teleportRootKeyDown = true;
+        }
+
+
         // Fixed Update
         private void FixedUpdate()
         {
+            handleMovement();
             runAnimation();
-        }
 
-        // Update is called once per frame
-        void Update()
-        {
-            #region Movement
-
-            if (InputManager.getKey("UP"))
-            {
-                //transform.Translate(Vector2.up * speed);
-                body.AddForce(Vector2.up * accel);
-                if (body.velocity.y > maxSpeed)
-                {
-                    body.velocity = new Vector2(body.velocity.x, maxSpeed);
-                    addAnimationStatus(AnimationState.UP);
-                }
-            }
-            if (InputManager.getKey("LEFt"))
-            {
-                //transform.Translate(Vector2.left * accel);
-                body.AddForce(Vector2.left * accel);
-                if (body.velocity.x < -maxSpeed)
-                {
-                    body.velocity = new Vector2(-maxSpeed, body.velocity.y);
-                    addAnimationStatus(AnimationState.LEFT);
-                }
-            }
-            if (InputManager.getKey("DOWN"))
-            {
-                //transform.Translate(Vector2.down * accel);
-                body.AddForce(Vector2.down * accel);
-                if (body.velocity.y < -maxSpeed)
-                {
-                    body.velocity = new Vector2(body.velocity.x, -maxSpeed);
-                    addAnimationStatus(AnimationState.DOWN);
-                }
-            }
-            if (InputManager.getKey("RIGHT"))
-            {
-                //transform.Translate(Vector2.right * accel);
-                body.AddForce(Vector2.right * accel);
-                if (body.velocity.x > maxSpeed)
-                {
-                    body.velocity = new Vector2(maxSpeed, body.velocity.y);
-                    addAnimationStatus(AnimationState.RIGHT);
-                }
-            }
-
-            if (!(InputManager.getKey("UP") || InputManager.getKey("DOWN")))
-            {
-                Vector2 damping = Vector2.zero;
-                damping.y = dampingFactor * -body.velocity.y;
-                body.AddForce(damping);
-
-                if (Mathf.Abs(body.velocity.y) <= minDamping)
-                {
-                    body.velocity = new Vector2(body.velocity.x, 0);
-                }
-            }
-
-            if (!(InputManager.getKey("LEFt") || InputManager.getKey("RIGHT")))
-            {
-                Vector2 damping = Vector2.zero;
-                damping.x = dampingFactor * -body.velocity.x;
-                body.AddForce(damping);
-
-                if (Mathf.Abs(body.velocity.x) <= minDamping)
-                {
-                    body.velocity = new Vector2(0, body.velocity.y);
-                }
-            }
-
-            #endregion
-
-            if (InputManager.getKeyDown("Interact"))
+            if (interactKeyDown)
             {
                 BroadcastMessage("interactWithObject");
             }
-            if (InputManager.getKeyDown("SpawnRoot"))
+            if (spawnRootKeyDown)
             {
                 if (rootList.Count >= maxRoots)
                 {
@@ -148,18 +105,64 @@ namespace Roots
                 }
                 rootList.Add(Instantiate(rootSpawnPrefab, body.transform.position, Quaternion.identity));
             }
-            if (InputManager.getKeyDown("TeleportRoot"))
+            if (teleportRootKeyDown)
             {
                 body.transform.position = rootList[rootList.Count - 1].transform.position;
             }
         }
 
-        void addAnimationStatus(AnimationState addState)
+        private void handleMovement()
+        {
+            // X
+            // Player input is in the opposite direction of current velocity
+            if (playerInput.x != 0 && velocity.x != 0 && Mathf.Sign(playerInput.x) != Mathf.Sign(velocity.x))
+            {
+                // Instantly reset velocity
+                velocity.x = 0;
+            }
+            // Deceleration
+            else if (playerInput.x == 0)
+            {
+                // Decelerate towards 0
+                velocity.x = Mathf.MoveTowards(velocity.x, 0, decel * Time.fixedDeltaTime);
+            }
+            // Regular Horizontal Movement
+            else
+            {
+                // Accelerate towards max speed
+                velocity.x = Mathf.MoveTowards(velocity.x, playerInput.x * maxSpeed, accel * Time.fixedDeltaTime);
+            }
+
+            // Y
+            // Player input is in the opposite direction of current velocity
+            if (playerInput.y != 0 && velocity.y != 0 && Mathf.Sign(playerInput.y) != Mathf.Sign(velocity.y))
+            {
+                // Instantly reset velocity
+                velocity.y = 0;
+            }
+            // Deceleration
+            else if (playerInput.y == 0)
+            {
+                // Decelerate towards 0
+                velocity.y = Mathf.MoveTowards(velocity.y, 0, decel * Time.fixedDeltaTime);
+            }
+            // Regular Horizontal Movement
+            else
+            {
+                // Accelerate towards max speed
+                velocity.y = Mathf.MoveTowards(velocity.y, playerInput.y * maxSpeed, accel * Time.fixedDeltaTime);
+            }
+
+            // Set velocity and move
+            body.velocity = velocity;
+        }
+
+        private void addAnimationStatus(AnimationState addState)
         {
             animstate.Add(addState);
         }
 
-        void runAnimation()
+        private void runAnimation()
         {
             if (animstate.Count > 0)
             {
@@ -195,7 +198,7 @@ namespace Roots
             animstate.Clear();
         }
 
-        void collectRune(RuneType collectedType)
+        private void collectRune(RuneType collectedType)
         {
             Debug.Log("Collected rune! Now have " + ++runes + " runes.");
             if (collectedType == RuneType.AIR)
