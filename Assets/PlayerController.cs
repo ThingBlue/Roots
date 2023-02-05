@@ -19,6 +19,12 @@ namespace Roots
 
         public Rigidbody2D body;
 
+        public Vector2 playerInput;
+        public Vector2 velocity;
+        public float deceleration = 100;
+
+        private bool interactKey = false;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -36,12 +42,67 @@ namespace Roots
         // Fixed Update
         private void FixedUpdate()
         {
-            
+            handleMovement();
+
+            // Check for interaction key
+            if (interactKey) BroadcastMessage("interactWithObject");
         }
+
+        #region Movement
+
+        private void handleMovement()
+        {
+            // X
+            // Player input is in the opposite direction of current velocity
+            if (playerInput.x != 0 && velocity.x != 0 && Mathf.Sign(playerInput.x) != Mathf.Sign(velocity.x))
+            {
+                // Instantly reset velocity
+                velocity.x = 0;
+            }
+            // Deceleration
+            else if (playerInput.x == 0)
+            {
+                // Decelerate towards 0
+                velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.fixedDeltaTime);
+            }
+            // Regular Horizontal Movement
+            else
+            {
+                // Accelerate towards max speed
+                velocity.x = Mathf.MoveTowards(velocity.x, playerInput.x * maxSpeed, accel * Time.fixedDeltaTime);
+            }
+
+            // Y
+            // Player input is in the opposite direction of current velocity
+            if (playerInput.y != 0 && velocity.y != 0 && Mathf.Sign(playerInput.y) != Mathf.Sign(velocity.y))
+            {
+                // Instantly reset velocity
+                velocity.y = 0;
+            }
+            // Deceleration
+            else if (playerInput.y == 0)
+            {
+                // Decelerate towards 0
+                velocity.y = Mathf.MoveTowards(velocity.y, 0, deceleration * Time.fixedDeltaTime);
+            }
+            // Regular Horizontal Movement
+            else
+            {
+                // Accelerate towards max speed
+                velocity.y = Mathf.MoveTowards(velocity.y, playerInput.y * maxSpeed, accel * Time.fixedDeltaTime);
+            }
+
+            body.velocity = velocity;
+        }
+
+        #endregion
 
         // Update is called once per frame
         void Update()
         {
+            handleInput();
+
+            /*
             #region Movement
 
             if (InputManager.getKey("UP"))
@@ -111,6 +172,21 @@ namespace Roots
             {
                 BroadcastMessage("interactWithObject");
             }
+            */
+        }
+
+        private void handleInput()
+        {
+            // Reset input
+            playerInput = Vector2.zero;
+            interactKey = false;
+
+            if (InputManager.getKey("LEFt")) playerInput.x -= 1;
+            if (InputManager.getKey("RIGHT")) playerInput.x += 1;
+            if (InputManager.getKey("UP")) playerInput.y += 1;
+            if (InputManager.getKey("DOWN")) playerInput.y -= 1;
+
+            if (InputManager.getKeyDown("Interact")) interactKey = true;
         }
 
         void collectRune(RuneType collectedType)
