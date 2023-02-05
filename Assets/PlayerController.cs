@@ -114,7 +114,6 @@ namespace Roots
 
             if (interactKeyDown)
             {
-                Debug.Log("ASDFASFSASFD");
                 BroadcastMessage("interactWithObject");
             }
             if (spawnRootKeyDown)
