@@ -2209,6 +2209,90 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: TX Tileset Wall_86
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0835e691d1deb94d9c3f2b41f16f66f
+      internalID: 2028733471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TX Tileset Wall_87
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24dd008bd9c78cd4ab5c8dd29a07f467
+      internalID: 754706820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TX Tileset Wall_88
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0bc04943b40292498f690e8d27e1ac5
+      internalID: 1254018248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TX Tileset Wall_89
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eca1f546aec510647b2477a7ad16ac8b
+      internalID: 1862673605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -2238,6 +2322,7 @@ TextureImporter:
       TX Tileset Wall_51: 21300102
       TX Tileset Wall_77: 1408959064
       TX Tileset Wall_61: 1779292369
+      TX Tileset Wall_89: 1862673605
       TX Tileset Wall_0: 21300000
       TX Tileset Wall_76: 1516322644
       TX Tileset Wall_38: 21300076
@@ -2264,8 +2349,10 @@ TextureImporter:
       TX Tileset Wall_74: -309703557
       TX Tileset Wall_52: 21300104
       TX Tileset Wall_72: 2131708165
+      TX Tileset Wall_88: 1254018248
       TX Tileset Wall_57: 21300114
       TX Tileset Wall_50: 21300100
+      TX Tileset Wall_86: 2028733471
       TX Tileset Wall_3: 21300006
       TX Tileset Wall_46: 21300092
       TX Tileset Wall_64: -1179357374
@@ -2300,6 +2387,7 @@ TextureImporter:
       TX Tileset Wall_11: 21300022
       TX Tileset Wall_55: 21300110
       TX Tileset Wall_65: -804485945
+      TX Tileset Wall_87: 754706820
       TX Tileset Wall_28: 21300056
       TX Tileset Wall_68: -1733501941
       TX Tileset Wall_44: 21300088
