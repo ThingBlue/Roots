@@ -13,7 +13,8 @@ namespace Roots
         public float accel = 100;
         public float decel = 100;
 
-        public GameObject rootSpawnPrefab;
+        public GameObject[] rootSpawnPrefabs;
+        private int lastRootNum = 0;
 
         private Animator animator;
 
@@ -122,11 +123,13 @@ namespace Roots
             {
                 if (rootList.Count >= maxRoots)
                 {
-                    GameObject rootToDestroy = rootList[0];
-                    rootList.RemoveAt(0);
+                    GameObject rootToDestroy = rootList[lastRootNum];
+                    rootList.RemoveAt(lastRootNum);
                     Destroy(rootToDestroy);
                 }
-                rootList.Add(Instantiate(rootSpawnPrefab, body.transform.position, Quaternion.identity));
+                rootList.Insert(lastRootNum, Instantiate(rootSpawnPrefabs[lastRootNum], body.transform.position, Quaternion.identity));
+                lastRootNum++;
+                lastRootNum %= 4;
             }
             if (teleportRootKeyDown)
             {
