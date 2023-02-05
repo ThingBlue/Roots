@@ -173,6 +173,12 @@ MonoBehaviour:
   - {fileID: 21300136, guid: d1dfbaa465a21f04a8cd98ea0c62f51a, type: 3}
   - {fileID: 21300136, guid: d1dfbaa465a21f04a8cd98ea0c62f51a, type: 3}
   - {fileID: 21300136, guid: d1dfbaa465a21f04a8cd98ea0c62f51a, type: 3}
+--- !u!50 &425036179 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 5001129134194786719, guid: 91b167149938dad4485bc1f6f7488271,
+    type: 3}
+  m_PrefabInstance: {fileID: 5001129134317635606}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,6 +983,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5001129134194786716, guid: 91b167149938dad4485bc1f6f7488271,
+        type: 3}
+      propertyPath: body
+      value: 
+      objectReference: {fileID: 425036179}
     - target: {fileID: 5001129134194786716, guid: 91b167149938dad4485bc1f6f7488271,
         type: 3}
       propertyPath: rootSpawnPrefab
