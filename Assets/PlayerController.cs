@@ -62,6 +62,7 @@ namespace Roots
             runes = 0;
 
             animator = GetComponentInChildren<Animator>();
+            animator.speed = 4;
             animstate = new List<AnimationState>();
         }
 
