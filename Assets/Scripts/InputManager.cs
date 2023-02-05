@@ -24,6 +24,7 @@ namespace Roots
             addKeyToMap("Interact", KeyCode.E);
             addKeyToMap("SpawnRoot", KeyCode.R);
             addKeyToMap("TeleportRoot", KeyCode.T);
+            addKeyToMap("RadialRoot", KeyCode.G);
         }
 
         #region Getters

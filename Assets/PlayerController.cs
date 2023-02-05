@@ -15,6 +15,7 @@ namespace Roots
         public float minDamping = 4;
 
         public GameObject rootSpawnPrefab;
+        public int maxRoots = 4;
         List<GameObject> rootList;
 
         public int runes;
@@ -118,6 +119,10 @@ namespace Roots
             }
             if (InputManager.getKeyDown("SpawnRoot"))
             {
+                if (rootList.Count >= maxRoots)
+                {
+                    rootList.RemoveAt(0);
+                }
                 rootList.Add(Instantiate(rootSpawnPrefab, body.transform.position, Quaternion.identity));
             }
             if (InputManager.getKeyDown("TeleportRoot"))
