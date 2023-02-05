@@ -167,6 +167,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: RuneCrystalsSheet-export_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e2ebb3dd31b2f941a0271da563998fb
+      internalID: 675220364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -180,6 +201,7 @@ TextureImporter:
     nameFileIdTable:
       RuneCrystalsSheet-export_1: -2080494027
       RuneCrystalsSheet-export_2: -2070034980
+      RuneCrystalsSheet-export_3: 675220364
       RuneCrystalsSheet-export_0: -2065383584
   spritePackingTag: 
   pSDRemoveMatte: 0
