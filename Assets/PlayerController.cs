@@ -16,11 +16,22 @@ namespace Roots
 
         public GameObject rootSpawnPrefab;
         List<GameObject> rootList;
+        private Animator animator;
 
         public int runes;
         RuneType[] runeTypes;
 
         public Rigidbody2D body;
+
+        private enum AnimationState
+        {
+            UP,
+            DOWN,
+            LEFT,
+            RIGHT
+        }
+
+        private List<AnimationState> animstate;
 
         // Start is called before the first frame update
         void Start()
@@ -36,12 +47,15 @@ namespace Roots
             rootList = new List<GameObject>();
 
             runes = 0;
+
+            animator = GetComponentInChildren<Animator>();
+            animstate = new List<AnimationState>();
         }
 
         // Fixed Update
         private void FixedUpdate()
         {
-            
+            runAnimation();
         }
 
         // Update is called once per frame
@@ -52,10 +66,11 @@ namespace Roots
             if (InputManager.getKey("UP"))
             {
                 //transform.Translate(Vector2.up * speed);
-                if (body.velocity.y < maxSpeed)
+                body.AddForce(Vector2.up * accel);
+                if (body.velocity.y > maxSpeed)
                 {
-                    body.AddForce(Vector2.up * accel);
-                    //body.velocity = new Vector2(body.velocity.x, maxSpeed);
+                    body.velocity = new Vector2(body.velocity.x, maxSpeed);
+                    addAnimationStatus(AnimationState.UP);
                 }
             }
             if (InputManager.getKey("LEFt"))
@@ -65,6 +80,7 @@ namespace Roots
                 if (body.velocity.x < -maxSpeed)
                 {
                     body.velocity = new Vector2(-maxSpeed, body.velocity.y);
+                    addAnimationStatus(AnimationState.LEFT);
                 }
             }
             if (InputManager.getKey("DOWN"))
@@ -74,6 +90,7 @@ namespace Roots
                 if (body.velocity.y < -maxSpeed)
                 {
                     body.velocity = new Vector2(body.velocity.x, -maxSpeed);
+                    addAnimationStatus(AnimationState.DOWN);
                 }
             }
             if (InputManager.getKey("RIGHT"))
@@ -83,6 +100,7 @@ namespace Roots
                 if (body.velocity.x > maxSpeed)
                 {
                     body.velocity = new Vector2(maxSpeed, body.velocity.y);
+                    addAnimationStatus(AnimationState.RIGHT);
                 }
             }
 
@@ -120,6 +138,40 @@ namespace Roots
             {
                 rootList.Add(Instantiate(rootSpawnPrefab, body.transform.position, Quaternion.identity));
             }
+        }
+
+        void addAnimationStatus(AnimationState addState)
+        {
+            animstate.Add(addState);
+        }
+
+        void runAnimation()
+        {
+            if (animstate.Count > 0)
+            {
+                if (animstate.Contains(AnimationState.LEFT))
+                {
+                    animator.Play("PlayerWalkLeft");
+                }
+                else if (animstate.Contains(AnimationState.RIGHT))
+                {
+                    animator.Play("PlayerWalkRight");
+                }
+                else if (animstate.Contains(AnimationState.UP))
+                {
+                    animator.Play("PlayerWalkUp");
+                }
+                else if (animstate.Contains(AnimationState.DOWN))
+                {
+                    animator.Play("PlayerWalkDown");
+                }
+            }
+            else
+            {
+                animator.Play("PlayerIdle");
+            }
+
+            animstate.Clear();
         }
 
         void collectRune(RuneType collectedType)
