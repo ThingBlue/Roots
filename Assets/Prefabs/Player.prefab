@@ -78,10 +78,10 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.56, y: 10.24}
+  m_Size: {x: 5.12, y: 3.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &5001129134194786705
@@ -135,6 +135,9 @@ MonoBehaviour:
   accel: 32
   dampingFactor: 4
   minDamping: 4
+  rootSpawnPrefab: {fileID: 0}
+  maxRoots: 4
+  rootList: []
   runes: 0
   body: {fileID: 0}
 --- !u!50 &5001129134194786719

@@ -35,6 +35,7 @@ namespace Roots
         }
 
         private List<AnimationState> animstate;
+        private AnimationState lastState = AnimationState.DOWN;
 
         // Start is called before the first frame update
         void Start()
@@ -181,7 +182,14 @@ namespace Roots
             }
             else
             {
-                animator.Play("PlayerIdle");
+                if (lastState == AnimationState.LEFT)
+                    animator.Play("PlayerIdleLeft");
+                else if (lastState == AnimationState.RIGHT)
+                    animator.Play("PlayerIdleRight");
+                else if (lastState == AnimationState.UP)
+                    animator.Play("PlayerIdleUp");
+                else if (lastState == AnimationState.DOWN)
+                    animator.Play("PlayerIdleDown");
             }
 
             animstate.Clear();
